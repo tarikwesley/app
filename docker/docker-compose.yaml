@@ -1,0 +1,32 @@
+version: '3.3'
+
+networks:
+  aw-network:
+    driver: bridge
+
+volumes:
+  grafana_data:
+  posgres_data:
+
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3001:3001
+    networks:
+      - aw-network
+    volumes:
+      - grafana_data:/grafana
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    networks:
+      - aw-network
+    volumes:
+      - posgres_data:/postgres
