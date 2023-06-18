@@ -1,27 +1,27 @@
-const express = require('express')
-const app = express()
-app.use(express.json())
-const router = require('./routes/routes')
-app.use(router)
-const cors = require('cors')
-app.use(cors('*'))
-require('./database')
-const port = normalizePort(process.env.PORT || "3333")
-app.set("port", port)
-app.listen(port, () => console.log(`Api rodando na porta ${port}`))
+const express = require("express");
+const sequelize = require("./utils/database");
+const Monitor = require("./models/Monitor");
 
-//função para normalização da porta do server. função tirada do gerador de código do express
-//verifica se tem alguma porta disponivel no server para rodar a aplicação
-function normalizePort(val) {
-  const port = parseInt(val, 10)
+const app = express();
 
-  if (isNaN(port)) {
-    return val
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+  next();
+});
+
+app.use("/dev", require("./routes/dev"));
+app.use("/monitors", require("./routes/routes"));
+
+(async () => {
+  try {
+    await sequelize.sync({ force: false });
+    console.log("test success");
+    app.listen(process.env.EXTERNAL_PORT || 3333);
+  } catch (error) {
+    console.error(error);
   }
-
-  if (port >= 0) {
-    return port
-  }
-
-  return false
-}
+})();
