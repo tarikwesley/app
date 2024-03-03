@@ -2,9 +2,9 @@
   "name": "app",
   "version": "1.0.0",
   "description": "Application for monitoring of energy usage",
-  "main": "server.js",
+  "main": "ApplicationServer.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/ApplicationServer.js"
   },
   "author": "tarikwesley",
   "license": "MIT",

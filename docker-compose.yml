@@ -3,31 +3,31 @@ networks:
   network:
     driver: bridge
 services:
-  # app:
-  #   container_name: app
-  #   image: tarikwesley/app:1.0.0
-  #   restart: always
-  #   ports:
-  #     - 3333:3333
-  #   networks:
-  #     - network
-  #   build:
-  #     context: .
-  #   environment:
-  #     - EXTERNAL_PORT=3333
-  #     - PGDATABASE=app
-  #     - PGUSER=postgres
-  #     - PGPASSWORD=postgres
-  #     - PGHOST=postgres
-  #     - PGPORT=5432
-  #   depends_on:
-  #     - postgres
-  #   links:
-  #     - postgres
+  app:
+    container_name: app
+    image: tarikwesley/app:1.0.0
+    restart: unless-stopped
+    ports:
+      - 3333:3333
+    networks:
+      - network
+    build:
+      context: .
+    environment:
+      - EXTERNAL_PORT=3333
+      - PGDATABASE=app
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGHOST=postgres
+      - PGPORT=5432
+    depends_on:
+      - postgres
+    links:
+      - postgres
   postgres:
     container_name: postgres
     image: postgres:alpine3.18
-    restart: always
+    restart: unless-stopped
     ports:
       - 5432:5432
     networks:
@@ -38,17 +38,17 @@ services:
       - POSTGRES_DB=app
     volumes:
       - postgres_data:/app/postgres
-  # grafana:
-  #   container_name: grafana
-  #   image: grafana/grafana:8.2.6
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - network
-  #   volumes:
-  #     - grafana_data:/grafana
-  #   depends_on:
-  #     - postgres
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:8.2.6
+    ports:
+      - 3000:3000
+    networks:
+      - network
+    volumes:
+      - grafana_data:/grafana
+    depends_on:
+      - postgres
 volumes:
   postgres_data: {}
-  # grafana_data: {}
+  grafana_data: {}

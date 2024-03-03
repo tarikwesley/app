@@ -21,6 +21,6 @@ app.use("/monitors", require("./routes/MonitorRoutes"))
     console.log("Connection has been established successfully.")
     app.listen(process.env.EXTERNAL_PORT || 3333)
   } catch (error) {
-    console.error(error)
+    console.error("Error in connection with database: ", error)
   }
 })()
