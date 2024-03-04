@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 const sequelize = require('../utils/Database')
+const moment = require('moment')
 
 class Monitor extends Model {}
 Monitor.init(
