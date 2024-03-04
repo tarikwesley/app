@@ -1,11 +1,11 @@
-"use strict"
+'use strict'
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     module.exports = {
       up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable("monitors", {
+        await queryInterface.createTable('monitors', {
           id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -24,10 +24,18 @@ module.exports = {
             type: DataTypes.INTEGER,
             allowNull: false,
           },
+          createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+            get() {
+              return moment.utc(this.getDataValue('createdAt')).format()
+            },
+          },
         })
       },
       down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable("monitors")
+        await queryInterface.dropTable('app')
       },
     }
   },

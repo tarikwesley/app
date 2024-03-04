@@ -33,10 +33,9 @@ Monitor.init(
   },
   {
     sequelize,
-    modelName: 'monitors',
+    modelName: 'app',
     hooks: {
       beforeCreate: (monitor, options) => {
-        // Antes de criar, converta a data de criação para UTC
         monitor.createdAt = moment.utc().format()
       },
     },
