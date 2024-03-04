@@ -1,5 +1,5 @@
-const { Model, DataTypes } = require("sequelize")
-const sequelize = require("../utils/Database")
+const { Model, DataTypes } = require('sequelize')
+const sequelize = require('../utils/Database')
 
 class Monitor extends Model {}
 Monitor.init(
@@ -22,10 +22,24 @@ Monitor.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+      get() {
+        return moment.utc(this.getDataValue('createdAt')).format()
+      },
+    },
   },
   {
     sequelize,
-    modelName: "monitors",
+    modelName: 'monitors',
+    hooks: {
+      beforeCreate: (monitor, options) => {
+        // Antes de criar, converta a data de criação para UTC
+        monitor.createdAt = moment.utc().format()
+      },
+    },
   }
 )
 
