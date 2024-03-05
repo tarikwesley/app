@@ -35,6 +35,8 @@ Monitor.init(
   {
     sequelize,
     modelName: 'app',
+    tableName: 'monitors',
+    timestamps: false,
     hooks: {
       beforeCreate: (monitor, options) => {
         monitor.createdAt = moment.utc().format()
