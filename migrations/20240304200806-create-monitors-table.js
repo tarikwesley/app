@@ -1,6 +1,6 @@
 'use strict'
 
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -29,7 +29,10 @@ module.exports = {
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         get() {
-          return moment.utc(this.getDataValue('created_at')).format()
+        return moment
+          .utc(this.getDataValue('created_at'))
+          .tz('America/Sao_Paulo')
+          .format()
         },
       },
     })

@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 const sequelize = require('../utils/Database')
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 class Monitor extends Model {}
 Monitor.init(
@@ -23,12 +23,15 @@ Monitor.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    createdAt: {
+    created_at: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       get() {
-        return moment.utc(this.getDataValue('createdAt')).format()
+        return moment
+          .utc(this.getDataValue('created_at'))
+          .tz('America/Sao_Paulo')
+          .format()
       },
     },
   },
@@ -39,7 +42,7 @@ Monitor.init(
     timestamps: false,
     hooks: {
       beforeCreate: (monitor, options) => {
-        monitor.createdAt = moment.utc().format()
+        monitor.created_at = moment().tz('America/Sao_Paulo').format()
       },
     },
   }
