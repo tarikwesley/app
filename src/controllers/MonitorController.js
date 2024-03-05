@@ -37,18 +37,6 @@ try {
   console.log('Error in createOne monitor: ', error)
 }
 
-// function Decoder(bytes, port) {
-//   var current = (bytes[0] << 8) + bytes[1]
-//   var power = (bytes[2] << 8) + bytes[3]
-//   var status = bytes[4]
-
-//   return {
-//     current: current / 100.0,
-//     power: power,
-//     status: status,
-//   }
-// }
-
 // [GET] ../monitors
 exports.getAll = async (req, res, next) => {
   console.log('getAll: [GET] /monitors/')

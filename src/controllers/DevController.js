@@ -1,5 +1,5 @@
-const packJson = require("../../package.json")
-const sequelize = require("../utils/Database")
+const packJson = require('../../package.json')
+const sequelize = require('../utils/Database')
 
 // [GET] ../dev/config
 exports.getConfig = (req, res, next) => {
@@ -8,18 +8,18 @@ exports.getConfig = (req, res, next) => {
 
 // [GET] ../dev/version
 exports.getVersion = (req, res, next) => {
-  return res.status(200).json({ "nps backend": packJson.version })
+  return res.status(200).json({ 'nps backend': packJson.version })
 }
 
 // [GET] ../dev/seq
 exports.getSeq = async (req, res, next) => {
   try {
     await sequelize.authenticate()
-    console.log("Sequelize connection established")
-    res.status(200).json("Sequelize connection established")
+    console.log('Sequelize connection established')
+    res.status(200).json('Sequelize connection established')
     next()
   } catch (error) {
-    console.log("Error in connection with database: ", error)
+    console.log('Error in connection with database: ', error)
     next(error)
   }
 }
